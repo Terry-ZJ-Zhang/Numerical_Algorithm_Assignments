@@ -14679,6 +14679,7 @@ body[data-format='mobile'] .jp-OutputArea-child .jp-OutputArea-output {
     <span class="n">Tf</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">f</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">xs</span><span class="p">)</span> <span class="o">+</span> <span class="n">f</span><span class="p">(</span><span class="n">a</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span> <span class="o">+</span> <span class="n">f</span><span class="p">(</span><span class="n">b</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span>
     <span class="k">return</span> <span class="n">Tf</span> <span class="o">*</span> <span class="n">h</span>
 
+
 <span class="c1"># Set function, interval, and error tolerance</span>
 <span class="n">f</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">**-</span><span class="mi">3</span>
 <span class="n">a</span><span class="p">,</span> <span class="n">b</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">/</span> <span class="mi">10</span><span class="p">,</span> <span class="mf">100.</span>
@@ -14693,7 +14694,9 @@ body[data-format='mobile'] .jp-OutputArea-child .jp-OutputArea-output {
     <span class="n">m</span> <span class="o">=</span> <span class="mi">2</span><span class="o">**</span><span class="n">k</span>
     <span class="n">exact_error</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">exact_integral</span> <span class="o">-</span> <span class="n">T</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">m</span><span class="p">))</span>
     <span class="k">if</span> <span class="n">exact_error</span> <span class="o">&lt;</span> <span class="n">epsilon</span><span class="p">:</span>
-        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">'The smallest k such that the exact error is less than 0.001 is: </span><span class="si">{</span><span class="n">k</span><span class="si">}</span><span class="s1">'</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s1">'The smallest k such that the exact error is less than 0.001 is: </span><span class="si">{</span><span class="n">k</span><span class="si">}</span><span class="s1">'</span>
+        <span class="p">)</span>
         <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">'When k = </span><span class="si">{</span><span class="n">k</span><span class="si">}</span><span class="s1">, exact error = </span><span class="si">{</span><span class="n">exact_error</span><span class="si">}</span><span class="s1">'</span><span class="p">)</span>
         <span class="k">break</span>
 </pre></div>
@@ -14802,7 +14805,7 @@ $$</p>
 <p>Joining equation (1) with (2) and (6), we get:
 $$
 \begin{equation}
-E_2 = I(f) - I_2 = -\frac{1}{2}E(f) + \cdots \tag{7},
+E_2 = I_2 - I(f) = \frac{1}{2}E(f) + \cdots \tag{7},
 \end{equation}
 $$
 and
@@ -14814,7 +14817,7 @@ $$</p>
 <p>So we have:
 $$
 \begin{equation}
-C = \frac{E_2}{I_1-I_2} \approx -\frac{1}{3}. \tag{9}
+C = \frac{E_2}{I_1-I_2} \approx \frac{1}{3}. \tag{9}
 \end{equation}
 $$</p>
 
@@ -14847,7 +14850,7 @@ $\int_a^{\frac{b+a}{2}} f(x) \, dx$ and $\int_{\frac{b+a}{2}}^b f(x) \, dx$ with
 <div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">adaptive_trapezoid</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">epsilon</span><span class="p">):</span>
     <span class="n">I1</span> <span class="o">=</span> <span class="n">T</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
     <span class="n">I2</span> <span class="o">=</span> <span class="n">T</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
-    <span class="n">E2</span> <span class="o">=</span> <span class="p">(</span><span class="n">I2</span> <span class="o">-</span> <span class="n">I1</span><span class="p">)</span> <span class="o">/</span> <span class="mi">3</span>  <span class="c1"># C = -1/3</span>
+    <span class="n">E2</span> <span class="o">=</span> <span class="p">(</span><span class="n">I1</span> <span class="o">-</span> <span class="n">I2</span><span class="p">)</span> <span class="o">/</span> <span class="mi">3</span>  <span class="c1"># C = 1/3</span>
 
     <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">E2</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="n">epsilon</span><span class="p">:</span>
         <span class="k">return</span> <span class="n">I2</span>
@@ -14922,27 +14925,32 @@ Exact error: 0.0001984901189260313
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Global variable to count function evaluations</span>
 <span class="n">function_evaluations</span> <span class="o">=</span> <span class="mi">0</span>
 
+
 <span class="k">def</span> <span class="nf">new_f</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
     <span class="k">global</span> <span class="n">function_evaluations</span>
     <span class="n">function_evaluations</span> <span class="o">+=</span> <span class="mi">1</span>
     <span class="k">return</span> <span class="n">x</span><span class="o">**-</span><span class="mi">3</span>
 
+
 <span class="k">def</span> <span class="nf">new_adaptive_trapezoid</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">fa</span><span class="p">,</span> <span class="n">fb</span><span class="p">,</span> <span class="n">epsilon</span><span class="p">):</span>
     <span class="c1"># Midpoint and function evaluation at midpoint</span>
     <span class="n">mid</span> <span class="o">=</span> <span class="p">(</span><span class="n">a</span> <span class="o">+</span> <span class="n">b</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span>
     <span class="n">fmid</span> <span class="o">=</span> <span class="n">new_f</span><span class="p">(</span><span class="n">mid</span><span class="p">)</span>
-    
+
     <span class="c1"># Trapezoid rule for one and two intervals</span>
     <span class="n">I1</span> <span class="o">=</span> <span class="p">(</span><span class="n">b</span> <span class="o">-</span> <span class="n">a</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">fa</span> <span class="o">+</span> <span class="n">fb</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span>
     <span class="n">I2</span> <span class="o">=</span> <span class="p">(</span><span class="n">b</span> <span class="o">-</span> <span class="n">a</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">fa</span> <span class="o">+</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">fmid</span> <span class="o">+</span> <span class="n">fb</span><span class="p">)</span> <span class="o">/</span> <span class="mi">4</span>
-    <span class="n">E2</span> <span class="o">=</span> <span class="p">(</span><span class="n">I2</span> <span class="o">-</span> <span class="n">I1</span><span class="p">)</span> <span class="o">/</span> <span class="mi">3</span>  <span class="c1"># C = -1/3</span>
+    <span class="n">E2</span> <span class="o">=</span> <span class="p">(</span><span class="n">I1</span> <span class="o">-</span> <span class="n">I2</span><span class="p">)</span> <span class="o">/</span> <span class="mi">3</span>  <span class="c1"># C = 1/3</span>
 
     <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">E2</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="n">epsilon</span><span class="p">:</span>
         <span class="k">return</span> <span class="n">I2</span>
     <span class="k">else</span><span class="p">:</span>
-        <span class="n">left_integral</span> <span class="o">=</span> <span class="n">new_adaptive_trapezoid</span><span class="p">(</span><span class="n">new_f</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">mid</span><span class="p">,</span> <span class="n">fa</span><span class="p">,</span> <span class="n">fmid</span><span class="p">,</span> <span class="n">epsilon</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span>
-        <span class="n">right_integral</span> <span class="o">=</span> <span class="n">new_adaptive_trapezoid</span><span class="p">(</span><span class="n">new_f</span><span class="p">,</span> <span class="n">mid</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">fmid</span><span class="p">,</span> <span class="n">fb</span><span class="p">,</span> <span class="n">epsilon</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span>
+        <span class="n">left_integral</span> <span class="o">=</span> <span class="n">new_adaptive_trapezoid</span><span class="p">(</span><span class="n">new_f</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">mid</span><span class="p">,</span> <span class="n">fa</span><span class="p">,</span> <span class="n">fmid</span><span class="p">,</span>
+                                               <span class="n">epsilon</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span>
+        <span class="n">right_integral</span> <span class="o">=</span> <span class="n">new_adaptive_trapezoid</span><span class="p">(</span><span class="n">new_f</span><span class="p">,</span> <span class="n">mid</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">fmid</span><span class="p">,</span> <span class="n">fb</span><span class="p">,</span>
+                                                <span class="n">epsilon</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">left_integral</span> <span class="o">+</span> <span class="n">right_integral</span>
+
 
 <span class="c1"># Initial function evaluations at the endpoints</span>
 <span class="n">fa</span> <span class="o">=</span> <span class="n">new_f</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
@@ -14955,15 +14963,21 @@ Exact error: 0.0001984901189260313
 <span class="c1"># Count the number of evaluations in part (a)</span>
 <span class="n">function_evaluations</span> <span class="o">=</span> <span class="mi">0</span>
 <span class="n">theoretical_function_evaluations</span> <span class="o">=</span> <span class="mi">0</span>
-<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">k</span><span class="o">+</span><span class="mi">1</span><span class="p">):</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">k</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
     <span class="n">m</span> <span class="o">=</span> <span class="mi">2</span><span class="o">**</span><span class="n">i</span>
     <span class="n">theoretical_function_evaluations</span> <span class="o">+=</span> <span class="n">m</span> <span class="o">+</span> <span class="mi">1</span>
     <span class="n">T</span><span class="p">(</span><span class="n">new_f</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">m</span><span class="p">)</span>
 
 <span class="c1"># Compare the number of evaluations in part (a) and (c)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">'In part (a), the theoretical number of function evaluations is: </span><span class="si">{</span><span class="n">function_evaluations</span><span class="si">}</span><span class="s1">'</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">'In part (a), the actual number of function evaluations is: </span><span class="si">{</span><span class="n">theoretical_function_evaluations</span><span class="si">}</span><span class="s1">'</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">'In part (c), the number of function evaluations is: </span><span class="si">{</span><span class="n">function_evaluations_c</span><span class="si">}</span><span class="s1">'</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span>
+    <span class="sa">f</span><span class="s1">'In part (a), the theoretical number of function evaluations is: </span><span class="si">{</span><span class="n">function_evaluations</span><span class="si">}</span><span class="s1">'</span>
+<span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span>
+    <span class="sa">f</span><span class="s1">'In part (a), the actual number of function evaluations is: </span><span class="si">{</span><span class="n">theoretical_function_evaluations</span><span class="si">}</span><span class="s1">'</span>
+<span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span>
+    <span class="sa">f</span><span class="s1">'In part (c), the number of function evaluations is: </span><span class="si">{</span><span class="n">function_evaluations_c</span><span class="si">}</span><span class="s1">'</span>
+<span class="p">)</span>
 </pre></div>
 
      </div>
